@@ -1,0 +1,28 @@
+.tools-container{
+    display: flex;
+    z-index: 12;
+    position: fixed;
+    align-self: center;
+    margin: 1rem;
+    padding: 0.5rem 1rem;
+    width: fit-content;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: white;
+}
+
+.tool{
+    cursor: pointer;
+    width: 4rem;
+    height: 4rem;
+    margin: 0.5rem;
+    border-radius: 50%;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.19);
+}
+
+.tools-container img{
+    height: 4rem;
+    width: 4rem;
+    border-radius: 50%;
+}
+
