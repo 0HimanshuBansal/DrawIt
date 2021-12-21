@@ -15,6 +15,11 @@ const Canvas = (props) => {
         const eraser = document.getElementById('eraser');
         const size = document.getElementById('pen-size-slider');
         const pointer = document.getElementById('pointer');
+        const undo = document.getElementById('undo');
+        let points = [];
+        let pathsry = [];
+        var mouse = { x: 0, y: 0 };
+        // var pointerColor = "black";
         var isEraser = false;
 
         pointer.style.top = `${window.innerHeight / 2 - size.value / 2}px`;
@@ -30,6 +35,7 @@ const Canvas = (props) => {
         const pen = canvas.getContext('2d');
         pen.scale(2, 2);
         pen.strokeStyle = 'black';
+        pen.lineJoin = 'round'
         pen.lineCap = 'round'
 
         canvas.addEventListener("mousedown", (event) => {
@@ -38,17 +44,37 @@ const Canvas = (props) => {
             mouseDown = true;
             pen.beginPath();
             pen.moveTo(event.clientX, event.clientY);
+
+
+            mouse = oMousePos(canvas, event);
+            points = [];
+            points.push({})
+
+            points.push({
+                x: mouse.x,
+                y: mouse.y,
+                size: size.value,
+                color: pen.strokeStyle,
+            });
         })
 
         canvas.addEventListener("mousemove", (event) => {
             if (mouseDown) {
                 pen.lineTo(event.clientX, event.clientY);
                 pen.stroke();
+                mouse = oMousePos(canvas, event);
+                points.push({
+                    x: mouse.x,
+                    y: mouse.y,
+                    size: size.value,
+                    color: pen.strokeStyle,
+                });
             }
         })
 
-        canvas.addEventListener("mouseup", () => {
+        canvas.addEventListener("mouseup", (event) => {
             mouseDown = false;
+            pathsry.push(points);
             // setMouseDown(false);
         })
 
@@ -85,6 +111,36 @@ const Canvas = (props) => {
         size.addEventListener('mouseup', () => {
             pointer.style.display = 'none';
         })
+
+        undo.addEventListener('click', () => {
+            pathsry.splice(-1, 1);
+            redrawAll();
+        })
+
+        const redrawAll = () => {
+            pen.clearRect(0, 0, canvas.width, canvas.height);
+
+            pathsry.forEach(path => {
+                pen.beginPath();
+                pen.strokeStyle = path[0].color;
+                pen.lineWidth = path[0].size;
+                pen.moveTo(path[0].x, path[0].y);
+                for (let i = 1; i < path.length; i++) {
+                    pen.strokeStyle = path[i].color;
+                    pen.lineWidth = path[i].size;
+                    pen.lineTo(path[i].x, path[i].y);
+                }
+                pen.stroke();
+            })
+        }
+
+        const oMousePos = (canvas, evt) => {
+            var ClientRect = canvas.getBoundingClientRect();
+            return {
+                x: Math.round(evt.clientX - ClientRect.left),
+                y: Math.round(evt.clientY - ClientRect.top)
+            }
+        }
     }
 
     useEffect(() => {

@@ -9,6 +9,9 @@ import Green from '../media/GreenPencil.png'
 import Custom from '../media/color-wheel.png'
 import Eraser from '../media/Eraser.png'
 import StickyNotePng from '../media/StickyNote.png'
+import Undo from '../media/undo.png'
+import Redo from '../media/redo.png'
+import Save from '../media/save.png'
 
 const Tools = (props) => {
     const { createNote } = props;
@@ -23,6 +26,9 @@ const Tools = (props) => {
                 <div className='tool note' onClick={() => { createNote() }}>
                     <img src={StickyNotePng} alt="Note" style={{ padding: "0.2rem" }} />
                 </div>
+                <div className='save tool'><img id='save' src={Save} alt="save" style={{ padding: "0.3rem" }} /></div>
+                <div className='undo tool'><img id='undo' src={Undo} alt="undo" style={{ padding: "0.3rem" }} /></div>
+                <div className='redo tool'><img id='redo' src={Redo} alt="redo" style={{ padding: "0.3rem" }} /></div>
             </div>
         </>
     )
