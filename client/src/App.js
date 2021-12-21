@@ -6,8 +6,9 @@ import './App.css'
 import PenSize from "./components/PenSize";
 const App = () => {
   const [notes, setNotes] = useState([]);
+  const [penStrokeColor, setPenStrokeColor] = useState('black');
 
-  const createNote = () => {
+  const create = () => {
     const id = notes.length;
     setNotes(notes.concat(<StickyNote key={id} idkey={id} />));
 
@@ -20,7 +21,6 @@ const App = () => {
       note.ondragstart = function () {
         return false;
       };
-
     }, 10);
   }
 
@@ -48,11 +48,14 @@ const App = () => {
     };
   };
 
+  const stroke = (color) => {
+    setPenStrokeColor(color);
+  }
   return (
     <div className="app">
-      <Tools createNote={createNote} />
+      <Tools createNote={create} changeColor={stroke}/>
       <PenSize />
-      <Canvas />
+      <Canvas strokeColor={penStrokeColor}/>
       {notes}
     </div>
   );
