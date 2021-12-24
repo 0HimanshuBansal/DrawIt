@@ -124,8 +124,8 @@ const Canvas = () => {
                 redoArray.push(pathsry[pathsry.length - 1]);
                 pathsry.splice(-1, 1);
                 redrawAll();
-            } 
-            if(pathsry.length == 0) disableComponent(undo);
+            }
+            if (pathsry.length == 0) disableComponent(undo);
         })
 
         redo.addEventListener('click', () => {
@@ -205,6 +205,10 @@ const Canvas = () => {
                 <img className='animateThis' id='toggleTool' src={ToggleTool} alt="toggle" />
             </div>
             <canvas id='myCanvas' />
+            <div id='credits'>
+                <div>Free icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a></div>
+                <div>& <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+            </div>
         </div>
     )
 }

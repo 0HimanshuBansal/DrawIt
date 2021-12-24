@@ -9,7 +9,7 @@ const PenSize = () => {
                     className='pen-size-slider'
                     id='pen-size-slider'
                     type="range"
-                    defaultValue={10} min={1} max={100}
+                    defaultValue={5} min={1} max={100}
                 />
             </div>
         </div>
