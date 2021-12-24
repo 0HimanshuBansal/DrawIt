@@ -84,7 +84,7 @@ const Canvas = () => {
             }
         })
 
-        canvas.addEventListener("mouseup", (event) => {
+        canvas.addEventListener("mouseup", () => {
             mouseDown = false;
             pathsry.push(points);
         })
@@ -187,13 +187,11 @@ const Canvas = () => {
     const disableComponent = (component) => {
         component.style.opacity = 0.7;
         component.style.pointerEvents = 'none';
-        // component.style.cursor = "none";
     }
 
     const enableComponent = (component) => {
         component.style.opacity = 1;
         component.style.pointerEvents = 'auto';
-        // component.style.cursor = 'pointer';
     }
 
     useEffect(() => {
