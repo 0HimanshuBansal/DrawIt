@@ -6,7 +6,6 @@ import './App.css'
 import PenSize from "./components/PenSize";
 const App = () => {
   const [notes, setNotes] = useState([]);
-  const [penStrokeColor, setPenStrokeColor] = useState('black');
 
   const create = () => {
     const id = notes.length;
@@ -48,14 +47,11 @@ const App = () => {
     };
   };
 
-  const stroke = (color) => {
-    setPenStrokeColor(color);
-  }
   return (
     <div className="app">
-      <Tools createNote={create} changeColor={stroke}/>
+      <Tools createNote={create} />
       <PenSize />
-      <Canvas strokeColor={penStrokeColor}/>
+      <Canvas />
       {notes}
     </div>
   );
