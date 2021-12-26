@@ -5,6 +5,7 @@ import ToggleTool from '../media/toggleTool.png'
 const Canvas = () => {
     var mouseDown = false;
     var isEraser = false;
+    var isClear = false;
 
     const initCanvas = () => {
         //yes, I admit it does not quite looks like "ReactJS", 
@@ -110,9 +111,8 @@ const Canvas = () => {
         size.addEventListener('mouseup', () => { pointer.style.display = 'none'; })
 
         save.addEventListener("click", (e) => {
-            let url = canvas.toDataURL();
-
-            let a = document.createElement("a");
+            const url = canvas.toDataURL();
+            const a = document.createElement("a");
             a.href = url;
             a.download = "board.jpg";
             a.click();
@@ -120,24 +120,31 @@ const Canvas = () => {
 
         undo.addEventListener('click', () => {
             if (pathsry.length > 0) {
-                enableComponent(redo);
-                redoArray.push(pathsry[pathsry.length - 1]);
-                pathsry.splice(-1, 1);
+                if(!isClear){
+                    enableComponent(redo);
+                    redoArray.push(pathsry.pop());    
+                }
+                isClear = false;
                 redrawAll();
             }
-            if (pathsry.length == 0) disableComponent(undo);
+            if (pathsry.length === 0) disableComponent(undo);
         })
 
         redo.addEventListener('click', () => {
             if (redoArray.length > 0) {
-                pathsry.push(redoArray[redoArray.length - 1]);
-                redoArray.splice(-1, 1);
+                enableComponent(undo);
+                pathsry.push(redoArray.pop());
                 redrawAll();
             }
-            if (redoArray.length == 0) disableComponent(redo);
+            if (redoArray.length === 0) disableComponent(redo);
         })
 
-        clear.addEventListener('click', () => { pen.clearRect(0, 0, canvas.width, canvas.height); })
+        clear.addEventListener('click', () => {
+            pen.clearRect(0, 0, canvas.width, canvas.height);
+            disableComponent(redo);
+            redoArray = [];
+            isClear = true;
+        })
 
         toggleTool.addEventListener('click', () => {
             const transformButton = toggleTool.style.transform;
@@ -194,9 +201,7 @@ const Canvas = () => {
         component.style.pointerEvents = 'auto';
     }
 
-    useEffect(() => {
-        initCanvas();
-    }, [])
+    useEffect(() => { initCanvas(); })
 
     return (
         <div className='myCanvas'>
